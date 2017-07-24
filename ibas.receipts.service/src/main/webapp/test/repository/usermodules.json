@@ -1,0 +1,9 @@
+[
+  {
+    "Id": "8d71fc16-7eb7-49d8-9ffb-5fcc91998aa2",
+    "Name": "Receipts",
+    "Category": "",
+    "Address": ".../",
+    "Repository": "http://localhost:8080/receipts/services/rest/data"
+  }
+]

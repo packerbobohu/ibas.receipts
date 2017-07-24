@@ -1,0 +1,10 @@
+{
+  "receipts": "收款",
+  "receipts_icon": "sap-icon://loan",
+  "receipts_func_receipt": "收款",
+  "receipts_app_receipt_list": "收款列表",
+  "receipts_app_receipt_choose": "收款选择",
+  "receipts_app_receipt_view": "收款查看",
+  "receipts_app_receipt_edit": "收款编辑",
+  "receipts_closing_delimiter": "----结束----"
+}
