@@ -4,12 +4,12 @@ import java.beans.PropertyChangeEvent;
 import javax.xml.bind.annotation.*;
 import org.colorcoding.ibas.bobas.common.*;
 import org.colorcoding.ibas.bobas.bo.*;
-import org.colorcoding.ibas.receipts.MyConsts;
+import org.colorcoding.ibas.receipts.MyConfiguration;
 
 /**
 * 收款-项目 集合
 */
-@XmlType(name = ReceiptItems.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ReceiptItems.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @XmlSeeAlso({ ReceiptItem.class })
 public class ReceiptItems extends BusinessObjects<IReceiptItem, IReceipt> implements IReceiptItems {
 

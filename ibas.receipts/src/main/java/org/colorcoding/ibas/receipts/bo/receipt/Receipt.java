@@ -20,15 +20,14 @@ import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.businesspartner.data.emBusinessPartnerType;
 import org.colorcoding.ibas.receipts.MyConfiguration;
-import org.colorcoding.ibas.receipts.MyConsts;
 
 /**
  * 获取-收款
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = Receipt.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
-@XmlRootElement(name = Receipt.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = Receipt.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
+@XmlRootElement(name = Receipt.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 @BOCode(Receipt.BUSINESS_OBJECT_CODE)
 public class Receipt extends BusinessObject<Receipt> implements IReceipt {
 

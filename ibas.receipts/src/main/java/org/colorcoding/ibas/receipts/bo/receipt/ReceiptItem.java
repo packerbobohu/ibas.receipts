@@ -15,14 +15,13 @@ import org.colorcoding.ibas.bobas.data.emYesNo;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
 import org.colorcoding.ibas.receipts.MyConfiguration;
-import org.colorcoding.ibas.receipts.MyConsts;
 
 /**
  * 获取-收款-项目
  * 
  */
 @XmlAccessorType(XmlAccessType.NONE)
-@XmlType(name = ReceiptItem.BUSINESS_OBJECT_NAME, namespace = MyConsts.NAMESPACE_BO)
+@XmlType(name = ReceiptItem.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
 public class ReceiptItem extends BusinessObject<ReceiptItem> implements IReceiptItem {
 
 	/**
