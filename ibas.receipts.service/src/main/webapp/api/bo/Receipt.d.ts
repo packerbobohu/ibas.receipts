@@ -161,6 +161,12 @@ export interface IReceiptItem extends IBODocumentLine {
     /** 行号 */
     lineId: number;
 
+    /** 业务伙伴类型 */
+    businessPartnerType: emBusinessPartnerType;
+
+    /** 业务伙伴代码 */
+    businessPartnerCode: string;
+
     /** 显示顺序 */
     visOrder: number;
 

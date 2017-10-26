@@ -14,3 +14,11 @@ import {
 export const BO_REPOSITORY_RECEIPTS: string = "BORepositoryReceipts";
 /** 业务对象编码-收款 */
 export const BO_CODE_RECEIPT: string = "${Company}_RP_RECEIPT";
+/** 业务伙伴类型 */
+export enum emBusinessPartnerType {
+
+    /** 客户 */
+    CUSTOMER,
+    /** 供应商 */
+    SUPPLIER,
+}

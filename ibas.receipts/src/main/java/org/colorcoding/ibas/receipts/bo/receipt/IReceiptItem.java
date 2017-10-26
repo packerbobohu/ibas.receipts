@@ -2,6 +2,7 @@ package org.colorcoding.ibas.receipts.bo.receipt;
 
 import org.colorcoding.ibas.bobas.bo.*;
 import org.colorcoding.ibas.bobas.data.*;
+import org.colorcoding.ibas.businesspartner.data.emBusinessPartnerType;
 import org.colorcoding.ibas.receipts.data.*;
 
 /**
@@ -546,6 +547,34 @@ public interface IReceiptItem extends IBODocumentLine {
     */
     void setCardNumber(String value);
 
+    /**
+     * 获取-业务伙伴类型
+     *
+     * @return 值
+     */
+    emBusinessPartnerType getBusinessPartnerType();
 
+    /**
+     * 设置-业务伙伴类型
+     *
+     * @param value
+     *            值
+     */
+    void setBusinessPartnerType(emBusinessPartnerType value);
+
+    /**
+     * 获取-业务伙伴代码
+     *
+     * @return 值
+     */
+    String getBusinessPartnerCode();
+
+    /**
+     * 设置-业务伙伴代码
+     *
+     * @param value
+     *            值
+     */
+    void setBusinessPartnerCode(String value);
 
 }

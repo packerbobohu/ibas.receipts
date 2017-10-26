@@ -465,6 +465,24 @@ export class ReceiptItems extends BusinessObjects<ReceiptItem, Receipt> implemen
         this.add(item);
         return item;
     }
+
+    /** 添加子项后 子项属性赋值 */
+    protected afterAdd(item: ReceiptItem): void {
+        super.afterAdd(item);
+        item.setProperty(ReceiptItem.PROPERTY_BUSINESSPARTNERCODE_NAME, this.parent.businessPartnerCode);
+        item.setProperty(ReceiptItem.PROPERTY_BUSINESSPARTNERTYPE_NAME, this.parent.businessPartnerType);
+    }
+
+    /** 主表属性发生变化后 子项属性赋值  */
+    protected onParentPropertyChanged(name: string): void {
+        super.onParentPropertyChanged(name);
+        if (name === Receipt.PROPERTY_BUSINESSPARTNERCODE_NAME) {
+            for (let item of this) {
+                item.setProperty(ReceiptItem.PROPERTY_BUSINESSPARTNERCODE_NAME, this.parent.businessPartnerCode);
+                item.setProperty(ReceiptItem.PROPERTY_BUSINESSPARTNERTYPE_NAME, this.parent.businessPartnerType);
+            }
+        }
+    }
 }
 
 /** 收款-项目 */
@@ -494,6 +512,39 @@ export class ReceiptItem extends BODocumentLine<ReceiptItem> implements IReceipt
     /** 设置-行号 */
     set lineId(value: number) {
         this.setProperty(ReceiptItem.PROPERTY_LINEID_NAME, value);
+    }
+
+    /** 映射的属性名称-业务伙伴类型 */
+    static PROPERTY_BUSINESSPARTNERTYPE_NAME: string = "BusinessPartnerType";
+    /** 获取-业务伙伴类型 */
+    get businessPartnerType(): emBusinessPartnerType {
+        return this.getProperty<emBusinessPartnerType>(Receipt.PROPERTY_BUSINESSPARTNERTYPE_NAME);
+    }
+    /** 设置-业务伙伴类型 */
+    set businessPartnerType(value: emBusinessPartnerType) {
+        this.setProperty(Receipt.PROPERTY_BUSINESSPARTNERTYPE_NAME, value);
+    }
+
+    /** 映射的属性名称-业务伙伴代码 */
+    static PROPERTY_BUSINESSPARTNERCODE_NAME: string = "BusinessPartnerCode";
+    /** 获取-业务伙伴代码 */
+    get businessPartnerCode(): string {
+        return this.getProperty<string>(Receipt.PROPERTY_BUSINESSPARTNERCODE_NAME);
+    }
+    /** 设置-业务伙伴代码 */
+    set businessPartnerCode(value: string) {
+        this.setProperty(Receipt.PROPERTY_BUSINESSPARTNERCODE_NAME, value);
+    }
+
+    /** 映射的属性名称-业务伙伴名称 */
+    static PROPERTY_BUSINESSPARTNERNAME_NAME: string = "BusinessPartnerName";
+    /** 获取-业务伙伴名称 */
+    get businessPartnerName(): string {
+        return this.getProperty<string>(Receipt.PROPERTY_BUSINESSPARTNERNAME_NAME);
+    }
+    /** 设置-业务伙伴名称 */
+    set businessPartnerName(value: string) {
+        this.setProperty(Receipt.PROPERTY_BUSINESSPARTNERNAME_NAME, value);
     }
 
     /** 映射的属性名称-显示顺序 */
@@ -840,6 +891,7 @@ export class ReceiptItem extends BODocumentLine<ReceiptItem> implements IReceipt
 
 
     /** 初始化数据 */
+    // tslint:disable-next-line:no-empty
     protected init(): void {
     }
 }

@@ -9,6 +9,8 @@
 import * as ibas from "ibas/index";
 import * as bo from "../../borep/bo/index";
 import { BORepositoryReceipts } from "../../borep/BORepositories";
+import { BO_CODE_SUPPLIER, ISupplier} from "../../3rdparty/businesspartner/index";
+import { emBusinessPartnerType } from "3rdparty/businesspartner/Datas";
 
 /** 编辑应用-收款 */
 export class ReceiptEditApp extends ibas.BOEditApplication<IReceiptEditView, bo.Receipt> {
@@ -35,6 +37,7 @@ export class ReceiptEditApp extends ibas.BOEditApplication<IReceiptEditView, bo.
         this.view.createDataEvent = this.createData;
         this.view.addReceiptItemEvent = this.addReceiptItem;
         this.view.removeReceiptItemEvent = this.removeReceiptItem;
+        this.view.chooseReceiptPartnerEvent = this.chooseReceiptPartner;
     }
     /** 视图显示后 */
     protected viewShowed(): void {
@@ -199,6 +202,22 @@ export class ReceiptEditApp extends ibas.BOEditApplication<IReceiptEditView, bo.
         this.view.showReceiptItems(this.editData.receiptItems.filterDeleted());
     }
 
+    /** 选择收款供应商事件 */
+    private chooseReceiptPartner(): void {
+        let that: this = this;
+        ibas.servicesManager.runChooseService<ISupplier>({
+            boCode: BO_CODE_SUPPLIER,
+            criteria: [
+                new ibas.Condition(BO_CODE_SUPPLIER,
+                    ibas.emConditionOperation.NOT_EQUAL, ibas.strings.valueOf(this.editData.businessPartnerCode)),
+            ],
+            onCompleted(selecteds: ibas.List<ISupplier>): void {
+                that.editData.businessPartnerCode = selecteds.firstOrDefault().code;
+                that.editData.businessPartnerName = selecteds.firstOrDefault().name;
+                that.editData.businessPartnerType = emBusinessPartnerType.SUPPLIER;
+            }
+        });
+    }
 }
 /** 视图-收款 */
 export interface IReceiptEditView extends ibas.IBOEditView {
@@ -212,6 +231,8 @@ export interface IReceiptEditView extends ibas.IBOEditView {
     addReceiptItemEvent: Function;
     /** 删除收款-项目事件 */
     removeReceiptItemEvent: Function;
+    /** 选择收款客户事件 */
+    chooseReceiptPartnerEvent: Function;
     /** 显示数据 */
     showReceiptItems(datas: bo.ReceiptItem[]): void;
 }

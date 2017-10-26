@@ -12,9 +12,14 @@ import org.colorcoding.ibas.bobas.data.Decimal;
 import org.colorcoding.ibas.bobas.data.emBOStatus;
 import org.colorcoding.ibas.bobas.data.emDocumentStatus;
 import org.colorcoding.ibas.bobas.data.emYesNo;
+import org.colorcoding.ibas.bobas.logics.IBusinessLogicContract;
+import org.colorcoding.ibas.bobas.logics.IBusinessLogicsHost;
 import org.colorcoding.ibas.bobas.mapping.DbField;
 import org.colorcoding.ibas.bobas.mapping.DbFieldType;
+import org.colorcoding.ibas.businesspartner.data.emBusinessPartnerType;
+import org.colorcoding.ibas.businesspartner.logics.IReceiptBusinessPartnerBalanceJournalContract;
 import org.colorcoding.ibas.receipts.MyConfiguration;
+
 
 /**
  * 获取-收款-项目
@@ -22,8 +27,7 @@ import org.colorcoding.ibas.receipts.MyConfiguration;
  */
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = ReceiptItem.BUSINESS_OBJECT_NAME, namespace = MyConfiguration.NAMESPACE_BO)
-public class ReceiptItem extends BusinessObject<ReceiptItem> implements IReceiptItem {
-
+public class ReceiptItem extends BusinessObject<ReceiptItem> implements IReceiptItem, IBusinessLogicsHost {
 	/**
 	 * 序列化版本标记
 	 */
@@ -1166,13 +1170,142 @@ public class ReceiptItem extends BusinessObject<ReceiptItem> implements IReceipt
 	}
 
 	/**
+	 * 属性名称-业务伙伴类型
+	 */
+	private static final String PROPERTY_BUSINESSPARTNERTYPE_NAME = "BusinessPartnerType";
+
+	/**
+	 * 业务伙伴类型 属性
+	 */
+	@DbField(name = "CardType", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<emBusinessPartnerType> PROPERTY_BUSINESSPARTNERTYPE = registerProperty(
+			PROPERTY_BUSINESSPARTNERTYPE_NAME, emBusinessPartnerType.class, MY_CLASS);
+
+	/**
+	 * 获取-业务伙伴类型
+	 *
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_BUSINESSPARTNERTYPE_NAME)
+	public final emBusinessPartnerType getBusinessPartnerType() {
+		return this.getProperty(PROPERTY_BUSINESSPARTNERTYPE);
+	}
+
+	/**
+	 * 设置-业务伙伴类型
+	 *
+	 * @param value
+	 *            值
+	 */
+	public final void setBusinessPartnerType(emBusinessPartnerType value) {
+		this.setProperty(PROPERTY_BUSINESSPARTNERTYPE, value);
+	}
+
+	/**
+	 * 属性名称-业务伙伴代码
+	 */
+	private static final String PROPERTY_BUSINESSPARTNERCODE_NAME = "BusinessPartnerCode";
+
+	/**
+	 * 业务伙伴代码 属性
+	 */
+	@DbField(name = "CardCode", type = DbFieldType.ALPHANUMERIC, table = DB_TABLE_NAME, primaryKey = false)
+	public static final IPropertyInfo<String> PROPERTY_BUSINESSPARTNERCODE = registerProperty(
+			PROPERTY_BUSINESSPARTNERCODE_NAME, String.class, MY_CLASS);
+
+	/**
+	 * 获取-业务伙伴代码
+	 *
+	 * @return 值
+	 */
+	@XmlElement(name = PROPERTY_BUSINESSPARTNERCODE_NAME)
+	public final String getBusinessPartnerCode() {
+		return this.getProperty(PROPERTY_BUSINESSPARTNERCODE);
+	}
+
+	/**
+	 * 设置-业务伙伴代码
+	 *
+	 * @param value
+	 *            值
+	 */
+	public final void setBusinessPartnerCode(String value) {
+		this.setProperty(PROPERTY_BUSINESSPARTNERCODE, value);
+	}
+
+
+	/**
 	 * 初始化数据
 	 */
 	@Override
 	protected void initialize() {
 		super.initialize();// 基类初始化，
 		this.setObjectCode(MyConfiguration.applyVariables(BUSINESS_OBJECT_CODE));
-
+		this.setBusinessPartnerType(emBusinessPartnerType.SUPPLIER);
 	}
 
+
+	//region 服务接口实现
+	@Override
+	public IBusinessLogicContract[] getContracts() {
+		return new IBusinessLogicContract[]{
+				new IReceiptBusinessPartnerBalanceJournalContract() {
+					@Override
+					public emBusinessPartnerType getBusinessPartnerType() {
+						return ReceiptItem.this.getBusinessPartnerType();
+					}
+
+					@Override
+					public String getBusinessPartnerCode() {
+						return ReceiptItem.this.getBusinessPartnerCode();
+					}
+
+					@Override
+					public Decimal getAmount() {
+						return ReceiptItem.this.getAmount();
+					}
+
+					@Override
+					public Decimal getRate() {
+						return ReceiptItem.this.getRate();
+					}
+
+					@Override
+					public String getCurrency() {
+						return ReceiptItem.this.getCurrency();
+					}
+
+					@Override
+					public String getBankCode() {
+						return ReceiptItem.this.getBankCode();
+					}
+
+					@Override
+					public String getCardNumber() {
+						return ReceiptItem.this.getCardNumber();
+					}
+
+					@Override
+					public String getBaseDocumentType() {
+						return ReceiptItem.this.getObjectCode();
+					}
+
+					@Override
+					public Integer getBaseDocumentEntry() {
+						return ReceiptItem.this.getDocEntry();
+					}
+
+					@Override
+					public Integer getBaseDocumentLineId() {
+						return ReceiptItem.this.getLineId();
+					}
+
+					@Override
+					public String getIdentifiers() {
+						return ReceiptItem.this.getIdentifiers();
+					}
+				}
+		};
+	}
+	//endregion
 }

@@ -33,6 +33,69 @@ export class ReceiptListView extends ibas.BOListView implements IReceiptListView
             visibleRowCountMode: sap.ui.table.VisibleRowCountMode.Interactive,
             rows: "{/rows}",
             columns: [
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_docentry"),
+                    template: new sap.m.Text("", {
+                        wrapping: false,
+                    }).bindProperty("text", {
+                        path: "docEntry",
+                    }),
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_documentstatus"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "documentStatus",
+                        formatter(data: any): any {
+                            return ibas.enums.describe(ibas.emDocumentStatus, data);
+                        }
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_businesspartnercode"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "businessPartnerCode",
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_businesspartnername"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "businessPartnerName",
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_documenttotal"),
+                    template: new sap.m.Text("", {
+                        wrapping: false,
+                    }).bindProperty("text", {
+                        path: "documentTotal",
+                    }),
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_documentcurrency"),
+                    template: new sap.m.Text("", {
+                        wrapping: false
+                    }).bindProperty("text", {
+                        path: "documentCurrency",
+                    })
+                }),
+                new sap.ui.table.Column("", {
+                    label: ibas.i18n.prop("bo_receipt_postingdate"),
+                    template: new sap.m.Text("", {
+                        wrapping: false,
+                    }).bindProperty("text", {
+                        path: "postingDate",
+                        type: "sap.ui.model.type.Date",
+                        formatOptions: {
+                            style: "short"
+                        }
+                    }),
+                }),
             ]
         });
         this.form.addContent(this.table);
@@ -161,7 +224,7 @@ export class ReceiptListView extends ibas.BOListView implements IReceiptListView
         }
         if (!done) {
             // 没有显示数据
-            this.table.setModel(new sap.ui.model.json.JSONModel({rows: datas}));
+            this.table.setModel(new sap.ui.model.json.JSONModel({ rows: datas }));
         }
         this.table.setBusy(false);
     }

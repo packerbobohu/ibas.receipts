@@ -1313,7 +1313,7 @@ public class Receipt extends BusinessObject<Receipt> implements IReceipt {
 		this.setDocumentDate(DateTime.getToday());
 		this.setDeliveryDate(DateTime.getToday());
 		this.setDocumentStatus(emDocumentStatus.RELEASED);
-
+        this.setBusinessPartnerType(emBusinessPartnerType.SUPPLIER);
 	}
 
 }
