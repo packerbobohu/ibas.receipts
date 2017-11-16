@@ -102,7 +102,7 @@ export class ReceiptChooseView extends ibas.BOChooseView implements IReceiptChoo
                 for (let item of datas) {
                     hDatas.rows.push(item);
                 }
-                model.refresh(false);
+                model.refresh(false);                done = true;
 
             }
         }
